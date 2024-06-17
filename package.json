@@ -1,0 +1,29 @@
+{
+  "name": "appointments-scheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "temp": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "build": "npx tsc",
+    "dev": "npx ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
+    "prod": "./node_modules/.bin/ts-node -r tsconfig-paths/register src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/reflect-metadata": "^0.1.0",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pug": "^3.0.3",
+    "reflect-metadata": "^0.2.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
