@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import authMiddleware from './middlewares/auth.middleware';
 import initAuth from './auth/passport.auth';
 import authRouter from './routes/auth.routes';
+import rolesMiddleware from './middlewares/roles.middleware';
 
 dotenv.config();
 
@@ -16,8 +17,8 @@ initAuth();
 
 app.use(express.json());
 
-app.use('/admin', authMiddleware, adminRouter);
-app.use('/user', authMiddleware, userRouter);
+app.use('/admin', authMiddleware, rolesMiddleware, adminRouter);
+app.use('/user', authMiddleware, rolesMiddleware, userRouter);
 app.use(authRouter);
 
 app.listen(EnvironmentVariables.PORT_NUMBER, () => {

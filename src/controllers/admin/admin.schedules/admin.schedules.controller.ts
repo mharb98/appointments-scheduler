@@ -1,20 +1,28 @@
 import { controller } from "@/decorators/api-decorators/controller.decorator";
 import { Delete, Get, Post, Put } from "@/decorators/api-decorators/http-methods.decorator";
+import { Inject } from "@/decorators/dependency-injection-decorators/inject.decorator";
 import { Request, Response } from "express";
+import { AdminSchedulesService } from "./admin.schedules.service";
+import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
 
+
+@Autowired
 @controller('schedules')
 class AdminSchedulesController {
-    
+    @Inject("AdminSchedulesService")
+    private schedulesService!: AdminSchedulesService;
+
     @Post('/')
     public async createSchedule(req: Request, res: Response): Promise<any> {
-        console.log(req.body);
+        const result = this.schedulesService.createSchedule();
 
-        return res.status(201).json({message: 'Schedule has been created successfully'});
+        return res.status(201).json({message: result});
     }
 
     @Get('/:id')
     public async findScheduleById(req: Request, res: Response): Promise<any> {
         console.log(req.params.id);
+        console.log(req.user);
 
         return res.status(200).json({message: 'Here is your schedule'});
     }
