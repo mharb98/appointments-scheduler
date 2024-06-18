@@ -1,5 +1,5 @@
 
-import AdminSchedulesController from '@/controllers/admin/admin.schedules/admin.schedules.controller';
+import AdminSchedulesController from '@/api/admin/admin.schedules/admin.schedules.controller';
 import { ApiHelperUtils } from '@/utils/api-helper.utils';
 import {Router} from 'express';
 

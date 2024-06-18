@@ -8,6 +8,9 @@ import authMiddleware from './middlewares/auth.middleware';
 import initAuth from './auth/passport.auth';
 import authRouter from './routes/auth.routes';
 import rolesMiddleware from './middlewares/roles.middleware';
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import swaggerConfig from './config/swagger.config';
 
 dotenv.config();
 
@@ -16,6 +19,15 @@ const app = express();
 initAuth();
 
 app.use(express.json());
+
+const swaggerSpecs = swaggerJsdoc(swaggerConfig);
+
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpecs, {explorer: true})
+)
+
 
 app.use('/admin', authMiddleware, rolesMiddleware, adminRouter);
 app.use('/user', authMiddleware, rolesMiddleware, userRouter);

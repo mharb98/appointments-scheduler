@@ -1,4 +1,4 @@
-import SchedulesController from "@/controllers/user/schedules.controller";
+import SchedulesController from "@/api/user/schedules.controller";
 import { ApiHelperUtils } from "@/utils/api-helper.utils";
 import { Router } from "express";
 

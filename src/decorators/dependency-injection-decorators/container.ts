@@ -1,4 +1,4 @@
-import { AdminSchedulesService } from "@/controllers/admin/admin.schedules/admin.schedules.service";
+import { AdminSchedulesService } from "@/api/admin/admin.schedules/admin.schedules.service";
 import { Constructor } from "./types/constructor.type";
 
 

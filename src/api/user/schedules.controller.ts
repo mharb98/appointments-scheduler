@@ -5,6 +5,23 @@ import { Request, Response } from "express";
 @controller('schedules')
 class SchedulesController {
 
+    /**
+     * @swagger
+     * /example/hello:
+     *   get:
+     *     summary: Returns a hello message
+     *     responses:
+     *       '200':
+     *         description: A successful response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                   example: 'Hello, World!'
+     */
     @Post('/')
     public async createSchedule(req: Request, res: Response) {
         return res.status(201).json({message: 'Schedule has been created via user controller'});

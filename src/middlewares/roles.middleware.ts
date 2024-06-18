@@ -2,7 +2,6 @@ import { ROLES_KEY } from "@/decorators/api-decorators/constants/api-decorators.
 import { NextFunction, Request, Response } from "express";
 
 const rolesMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req);
     // const classRoles = Reflect.getMetadata(ROLES_KEY, req.route.stack[req.route.stack.length - 1].handle.constructor) || [];
     // const methodRoles = Reflect.getMetadata(ROLES_KEY, req.route.stack[req.route.stack.length - 1].handle) || [];
 
