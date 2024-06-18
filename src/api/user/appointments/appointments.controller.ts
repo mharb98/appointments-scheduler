@@ -3,25 +3,27 @@ import { Delete, Get, Post, Put } from "@/decorators/api-decorators/http-methods
 import { Request, Response } from "express";
 
 @controller('schedules')
-class SchedulesController {
+class AppointmentsController {
 
     /**
      * @swagger
-     * /example/hello:
-     *   get:
-     *     summary: Returns a hello message
+     * /admin/appointments:
+     *   post:
+     *     summary: Create a new appointment
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/create-appointment.dto/definitions/CreateAppointmentDTO'
      *     responses:
-     *       '200':
-     *         description: A successful response
+     *       '201':
+     *         description: Created
      *         content:
      *           application/json:
      *             schema:
-     *               type: object
-     *               properties:
-     *                 message:
-     *                   type: string
-     *                   example: 'Hello, World!'
-     */
+     *               $ref: '#/components/schemas/create-appointment.dto/definitions/CreateAppointmentDTO'
+    */
     @Post('/')
     public async createSchedule(req: Request, res: Response) {
         return res.status(201).json({message: 'Schedule has been created via user controller'});
@@ -48,4 +50,4 @@ class SchedulesController {
     }
 }
 
-export default SchedulesController;
+export default AppointmentsController;

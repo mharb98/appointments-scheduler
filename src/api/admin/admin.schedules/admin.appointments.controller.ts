@@ -5,10 +5,9 @@ import { Request, Response } from "express";
 import { AdminSchedulesService } from "./admin.schedules.service";
 import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
 
-
 @Autowired
 @controller('schedules')
-class AdminSchedulesController {
+class AdminAppointmentsController {
     @Inject("AdminSchedulesService")
     private schedulesService!: AdminSchedulesService;
 
@@ -49,4 +48,4 @@ class AdminSchedulesController {
     }
 }
 
-export default AdminSchedulesController;
+export default AdminAppointmentsController;
