@@ -8,7 +8,7 @@ import { Appointment } from "@/database/schemas/appointment.schema";
 import { AppointmentsRepository } from "@/database/repositories/appointments.repository";
 
 @Autowired
-@controller('schedules')
+@controller('appointments')
 class AdminAppointmentsController {
     @Inject("AdminSchedulesService")
     private schedulesService: AdminSchedulesService;
@@ -32,10 +32,14 @@ class AdminAppointmentsController {
 
     @Get('/:id')
     public async findScheduleById(req: Request, res: Response): Promise<any> {
-        console.log(req.params.id);
-        console.log(req.user);
+        const appointmenId = req.params.id;
+        const appointment = await this.appointmentsRepository.findOne(appointmenId);
 
-        return res.status(200).json({message: 'Here is your schedule'});
+        if(appointment){
+            return res.status(200).json({appointment});
+        } else {
+            return res.status(404).json({message: `Appointment ${appointmenId} does not exist`});
+        }
     }
 
     @Put('/:id')
