@@ -21,7 +21,6 @@ export function loadSchemas(): Record<string, any> {
     schemas[file.name] = JSON.parse(schemaContent);
   });
 
-  console.log('Loaded schemas:', schemas);
 
   return schemas;
 }

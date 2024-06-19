@@ -1,26 +1,33 @@
 import { controller } from "@/decorators/api-decorators/controller.decorator";
 import { Delete, Get, Post, Put } from "@/decorators/api-decorators/http-methods.decorator";
 import { Inject } from "@/decorators/dependency-injection-decorators/inject.decorator";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AdminSchedulesService } from "./admin.schedules.service";
 import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
 import { Appointment } from "@/database/schemas/appointment.schema";
+import { AppointmentsRepository } from "@/database/repositories/appointments.repository";
 
 @Autowired
 @controller('schedules')
 class AdminAppointmentsController {
     @Inject("AdminSchedulesService")
-    private schedulesService!: AdminSchedulesService;
+    private schedulesService: AdminSchedulesService;
+    
+    @Inject("AppointmentsRepository")
+    private appointmentsRepository: AppointmentsRepository;
 
     @Post('/')
-    public async createSchedule(req: Request, res: Response): Promise<any> {
-        const appointment = await Appointment.create({
-            name: "Marwan Appointment",
-            description: "Marwan creating an appointment to check if the db is working",
-            data: Date.now()
-        });
+    public async createSchedule(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            const appointment = await this.appointmentsRepository.createAppointment({
+                name: "Marwan",
+                description: "Created appointment via repository layer"
+            })
 
-        return res.status(201).json({message: appointment});
+            return res.status(201).json({message: appointment});
+        } catch(error: any) {
+            next(error);
+        }
     }
 
     @Get('/:id')

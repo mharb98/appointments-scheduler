@@ -42,5 +42,3 @@ dtoFiles.forEach(file => {
     writeFileSync(outputPath, JSON.stringify(schema, null, 2));
   }
 });
-
-console.log(`Generated schemas for ${dtoFiles.length} DTO files.`);
