@@ -19,10 +19,7 @@ class AdminAppointmentsController {
     @Post('/')
     public async createSchedule(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
-            const appointment = await this.appointmentsRepository.createAppointment({
-                name: "Marwan",
-                description: "Created appointment via repository layer"
-            })
+            const appointment = await this.appointmentsRepository.createAppointment(req.body);
 
             return res.status(201).json({message: appointment});
         } catch(error: any) {
@@ -44,9 +41,12 @@ class AdminAppointmentsController {
 
     @Put('/:id')
     public async updateSchedule(req: Request, res: Response): Promise<any> {
-        console.log(req.params.id);
+        const id = req.params.id
+        await this.appointmentsRepository.updateAppointment(id, req.body);
 
-        return res.status(200).json({message: 'Updated your schedule successfully'});
+        const appointment = await this.appointmentsRepository.findOne(id);
+
+        return res.status(200).json({appointment});
     }
 
     @Get('/')
@@ -58,9 +58,11 @@ class AdminAppointmentsController {
 
     @Delete('/:id')
     public async deleteSchedules(req: Request, res: Response): Promise<any> {
-        console.log(req.params.id);
+        const id = req.params.id;
         
-        return res.status(204).json({message: 'Schedule has been deleted successfully'});
+        await this.appointmentsRepository.deleteOne(id);
+
+        return res.status(204).json({id});
     }
 }
 

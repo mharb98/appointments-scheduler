@@ -9,11 +9,24 @@ export class AppointmentsRepository extends BaseRepository(Appointment) {
             return await this.getModel().create({
                 name: createAppointmentInput.name,
                 description: createAppointmentInput.description,
-                date: new Date("2024-06-30")
+                date: createAppointmentInput.date
+            })
+        }
+
+        public async updateAppointment(id: string, updateAppointmentInput: any): Promise<void> {
+            console.log(updateAppointmentInput);
+            await this.getModel().updateOne({
+                _id: id
+            }, {
+                ...updateAppointmentInput
             })
         }
 
         public async findOne(id: string): Promise<AppointmentModel | null> {
             return await this.getModel().findById(id)
+        }
+
+        public async deleteOne(id: string): Promise<void> {
+            await this.getModel().deleteOne({_id: id});
         }
 }
