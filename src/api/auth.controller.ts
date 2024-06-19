@@ -43,9 +43,8 @@ class AuthController {
                 throw new Error("User doesn't exist");
             }
 
-            const encryptedPassword = await PasswordUtils.encryptPassword(password);
 
-            if(user.password !== encryptedPassword) {
+            if(!PasswordUtils.validatePassword(password, user.password)) {
                 throw new Error("Invalid email/password");
             }
 

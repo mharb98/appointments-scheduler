@@ -8,4 +8,8 @@ export class PasswordUtils {
             throw new Error("Failed to encrypt password");
         }
     }
+
+    public static async validatePassword(inputPassword: string, hashedPassword: string): Promise<boolean> {
+        return await bcrypt.compare(inputPassword, hashedPassword);
+    }
 }

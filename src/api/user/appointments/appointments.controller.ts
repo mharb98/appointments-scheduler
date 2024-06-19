@@ -1,32 +1,26 @@
+import { AppointmentsRepository } from "@/database/repositories/appointments.repository";
 import { controller } from "@/decorators/api-decorators/controller.decorator";
 import { Delete, Get, Post, Put } from "@/decorators/api-decorators/http-methods.decorator";
+import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
+import { Inject } from "@/decorators/dependency-injection-decorators/inject.decorator";
 import { Request, Response } from "express";
 
-@controller('schedules')
+@Autowired
+@controller('appointments')
 class AppointmentsController {
-
-    /**
-     * @swagger
-     * /admin/appointments:
-     *   post:
-     *     summary: Create a new appointment
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/create-appointment.dto/definitions/CreateAppointmentDTO'
-     *     responses:
-     *       '201':
-     *         description: Created
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/create-appointment.dto/definitions/CreateAppointmentDTO'
-    */
+    @Inject("AppointmentsRepository") 
+    private appointmentsRepository: AppointmentsRepository;
+    
     @Post('/')
     public async createSchedule(req: Request, res: Response) {
-        return res.status(201).json({message: 'Schedule has been created via user controller'});
+        const user: any = req.user;
+
+        const appointment = await this.appointmentsRepository.createAppointment({
+            ...req.body,
+            userId: user.id,
+        });
+
+        return res.status(201).json({ appointment });
     }
 
     @Get('/')
