@@ -5,8 +5,8 @@ import { Inject } from "@/decorators/dependency-injection-decorators/inject.deco
 import { EnvironmentVariables } from "@/environment-vars";
 import { NextFunction, Request, Response } from "express";
 import * as jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
+import { PasswordUtils } from "@/utils/password.utils";
 
 @Autowired
 @controller('auth')
@@ -18,9 +18,8 @@ class AuthController {
     @Post('/register')
     public async register(req: Request, res: Response) {
         const {name,email, phoneNumber, password, dateOfBirth} = req.body;
-        console.log("we are here");
-        const encryptedPassword = await bcrypt.hash(password, 1);
-        console.log(encryptedPassword);
+
+        const encryptedPassword = await PasswordUtils.encryptPassword(password);
 
         const user = await this.usersRepository.createUser({
             name,
@@ -35,12 +34,27 @@ class AuthController {
 
     @Post('/login')
     public async login(req: Request, res: Response, next: NextFunction) {
+        const {email, password} = req.body;
+
         try{
+            const user = await this.usersRepository.findByEmail(email);
+
+            if(!user){
+                throw new Error("User doesn't exist");
+            }
+
+            const encryptedPassword = await PasswordUtils.encryptPassword(password);
+
+            if(user.password !== encryptedPassword) {
+                throw new Error("Invalid email/password");
+            }
+
             const accessToken = jwt.sign({
-                    id: 1,
-                    name: "Marwan",
-                    email: "marwan@gmail.com",
-                    roles: ["admin", "financing"]
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    dateOfBirth: user.dateOfBirth,
+                    phoneNumber: user.phoneNumber
                 },
                 EnvironmentVariables.JWT_SECRET,
                 {expiresIn: "1h"}

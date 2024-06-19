@@ -15,4 +15,8 @@ export class UsersRepository extends BaseRepository(User) {
     public async findById(id: string): Promise<any> {
         return await this.getModel().findById({_id: id});
     }
+
+    public async findByEmail(email: string): Promise<any> {
+        return await this.getModel().findOne({email});
+    }
 }
