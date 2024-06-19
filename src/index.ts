@@ -11,12 +11,14 @@ import rolesMiddleware from './middlewares/roles.middleware';
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import swaggerConfig from './config/swagger.config';
+import { initDb } from './database';
 
 dotenv.config();
 
 const app = express();
 
 initAuth();
+initDb();
 
 app.use(express.json());
 

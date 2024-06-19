@@ -4,6 +4,7 @@ import { Inject } from "@/decorators/dependency-injection-decorators/inject.deco
 import { Request, Response } from "express";
 import { AdminSchedulesService } from "./admin.schedules.service";
 import { Autowired } from "@/decorators/dependency-injection-decorators/auto-wired.decorator";
+import { Appointment } from "@/database/schemas/appointment.schema";
 
 @Autowired
 @controller('schedules')
@@ -13,9 +14,13 @@ class AdminAppointmentsController {
 
     @Post('/')
     public async createSchedule(req: Request, res: Response): Promise<any> {
-        const result = this.schedulesService.createSchedule();
+        const appointment = await Appointment.create({
+            name: "Marwan Appointment",
+            description: "Marwan creating an appointment to check if the db is working",
+            data: Date.now()
+        });
 
-        return res.status(201).json({message: result});
+        return res.status(201).json({message: appointment});
     }
 
     @Get('/:id')
