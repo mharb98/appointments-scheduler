@@ -9,9 +9,6 @@ import { AppointmentsRepository } from "@/database/repositories/appointments.rep
 @Autowired
 @controller('appointments')
 class AdminAppointmentsController {
-    @Inject("AdminSchedulesService")
-    private schedulesService: AdminSchedulesService;
-    
     @Inject("AppointmentsRepository")
     private appointmentsRepository: AppointmentsRepository;
 

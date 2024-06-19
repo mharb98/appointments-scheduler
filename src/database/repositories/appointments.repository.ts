@@ -14,7 +14,6 @@ export class AppointmentsRepository extends BaseRepository(Appointment) {
         }
 
         public async updateAppointment(id: string, updateAppointmentInput: any): Promise<void> {
-            console.log(updateAppointmentInput);
             await this.getModel().updateOne({
                 _id: id
             }, {

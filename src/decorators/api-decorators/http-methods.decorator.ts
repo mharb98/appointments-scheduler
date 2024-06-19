@@ -10,7 +10,7 @@ function createRouteDecorator(method: HttpMethod) {
                 path,
                 methodName: propertyKey,
             })
-            console.log(routes);
+
             Reflect.defineMetadata(ROUTES_METADATA, routes, target.constructor);
         }
     }
