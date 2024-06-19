@@ -6,11 +6,13 @@ import { AppointmentModel } from "@/models/appointment.model";
 @Injectable("AppointmentsRepository")
 export class AppointmentsRepository extends BaseRepository(Appointment) {
         public async createAppointment(createAppointmentInput: any): Promise<AppointmentModel> {
+            
             return await this.getModel().create({
                 name: createAppointmentInput.name,
                 description: createAppointmentInput.description,
-                date: createAppointmentInput.date
-            })
+                date: createAppointmentInput.date,
+                user: createAppointmentInput.userId,
+            });
         }
 
         public async updateAppointment(id: string, updateAppointmentInput: any): Promise<void> {
@@ -22,7 +24,7 @@ export class AppointmentsRepository extends BaseRepository(Appointment) {
         }
 
         public async findOne(id: string): Promise<AppointmentModel | null> {
-            return await this.getModel().findById(id)
+            return await this.getModel().findById(id).populate('user');
         }
 
         public async deleteOne(id: string): Promise<void> {
